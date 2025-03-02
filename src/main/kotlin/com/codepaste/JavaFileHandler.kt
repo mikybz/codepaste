@@ -5,8 +5,8 @@ import java.io.File
 class JavaFileHandler : FileHandlerBase() {
     override fun processFile(fileContent: String, projectDir: String, config: AppConfig): String {
         val contentLines = fileContent.lines()
-        val packageName = fileTypeDetector.extractPackageName(contentLines)
-        val className = fileTypeDetector.extractClassName(contentLines)
+        val packageName = FileUtils.extractPackageName(contentLines)
+        val className = FileUtils.extractClassName(contentLines)
 
         if (packageName == null) {
             logger.warn("No package declaration found in Java file")

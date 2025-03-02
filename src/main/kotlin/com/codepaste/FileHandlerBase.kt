@@ -7,7 +7,6 @@ import java.nio.file.StandardOpenOption
 
 abstract class FileHandlerBase {
     protected val logger = LoggerFactory.getLogger(this::class.java)
-    protected val fileTypeDetector = FileTypeDetector()
 
     abstract fun processFile(fileContent: String, projectDir: String, config: AppConfig): String
 

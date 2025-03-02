@@ -5,7 +5,7 @@ import java.io.File
 class OtherFileHandler : FileHandlerBase() {
     override fun processFile(fileContent: String, projectDir: String, config: AppConfig): String {
         // For other file types, try to determine the file name from the content
-        val fileName = fileTypeDetector.determineFileName(fileContent)
+        val fileName = FileUtils.determineFileName(fileContent)
 
         logger.info("Processing other file type. Filename: $fileName")
 

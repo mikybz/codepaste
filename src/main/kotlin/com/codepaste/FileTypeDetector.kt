@@ -9,6 +9,11 @@ class FileTypeDetector {
     // File extension patterns
     private val kotlinPattern = Pattern.compile("""\.kt$|\.kts$""")
     private val javaPattern = Pattern.compile("""\.java$""")
+    
+    // Patterns for content extraction
+    private val packagePattern = Pattern.compile("""package\s+([\w.]+)""")
+    private val javaClassPattern = Pattern.compile("""(?:public\s+)?(?:class|interface|enum)\s+(\w+)""")
+    private val kotlinClassPattern = Pattern.compile("""(?:data\s+)?(?:class|interface|object)\s+(\w+)""")
 
     // Language syntax patterns
     private val kotlinSyntaxPatterns = listOf(
@@ -80,7 +85,6 @@ class FileTypeDetector {
     }
 
     fun extractPackageName(contentLines: List<String>): String? {
-        val packagePattern = Pattern.compile("""package\s+([\w.]+)""")
         for (line in contentLines) {
             val matcher = packagePattern.matcher(line)
             if (matcher.find()) {
@@ -90,18 +94,34 @@ class FileTypeDetector {
         return null
     }
 
+    /**
+     * Extracts the class name from content lines
+     */
     fun extractClassName(contentLines: List<String>): String {
-        val javaClassPattern = Pattern.compile("""(?:public\s+)?(?:class|interface|enum)\s+(\w+)""")
-        val kotlinClassPattern = Pattern.compile("""(?:data\s+)?(?:class|interface|object)\s+(\w+)""")
+        // Combined pattern that handles various declaration forms
+        val typeDeclarationPattern = Pattern.compile(
+            """(?:public\s+|private\s+|protected\s+|internal\s+|data\s+|sealed\s+|open\s+|abstract\s+)?
+                (?:class|interface|enum\s+class|object|annotation\s+class)\s+
+                (\w+)""".trimIndent().replace("\n", ""),
+            Pattern.COMMENTS
+        )
 
         for (line in contentLines) {
-            // Try Java pattern first
+            val matcher = typeDeclarationPattern.matcher(line)
+            if (matcher.find()) {
+                return matcher.group(1)
+            }
+        }
+
+        // Fallback to original patterns if the enhanced pattern doesn't match
+        for (line in contentLines) {
+            // Try Java pattern
             var matcher = javaClassPattern.matcher(line)
             if (matcher.find()) {
                 return matcher.group(1)
             }
 
-            // Then try Kotlin pattern
+            // Try Kotlin pattern
             matcher = kotlinClassPattern.matcher(line)
             if (matcher.find()) {
                 return matcher.group(1)
@@ -123,7 +143,6 @@ class FileTypeDetector {
         }
     }
 }
-
 enum class FileType {
     JAVA, KOTLIN, OTHER
 }
