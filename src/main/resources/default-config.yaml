@@ -1,0 +1,24 @@
+# CodePaste Application Configuration
+
+# Window dimensions
+windowWidth: 180
+windowHeight: 300
+
+# UI element sizes
+buttonWidth: 160
+fieldWidth: 160
+pasteButtonHeight: 80
+
+# Java source directory patterns to search for
+javaSourceRoots:
+  - src/main/java
+  - src/test/java
+  - src/java
+  - java
+
+# Kotlin source directory patterns to search for
+kotlinSourceRoots:
+  - src/main/kotlin
+  - src/test/kotlin
+  - src/kotlin
+  - kotlin
