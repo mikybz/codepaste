@@ -37,7 +37,7 @@ class KotlinFileHandler : FileHandlerBase() {
 
         // Write the content to the file
         try {
-            writeFile(targetFile, contentLines.joinToString("\n"))
+            writeFile(targetFile, fileContent)
             return "Saved Kotlin file: ${targetFile.absolutePath}"
         } catch (e: Exception) {
             throw CodePasteException("Error writing Kotlin file: ${e.message}")

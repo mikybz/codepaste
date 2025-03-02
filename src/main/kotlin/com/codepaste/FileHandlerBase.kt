@@ -31,10 +31,10 @@ abstract class FileHandlerBase {
             if (javaKotlinFiles.isNotEmpty()) {
                 val firstFile = javaKotlinFiles.first()
                 val fileContent = Files.readString(firstFile.toPath())
-                val packageName = fileTypeDetector.extractPackageName(fileContent.lines())
+                val packageName = FileUtils.extractPackageName(fileContent)
 
-                if (packageName != null) {
-                    val packagePath = packageName.replace('.', File.separatorChar)
+                if (packageName.isNotEmpty()) {
+                    val packagePath = FileUtils.packageToPath(packageName)
                     val path = firstFile.absolutePath
                     val pathWithoutPackage = path.removeSuffix(File.separator + firstFile.name)
                         .removeSuffix(File.separator + packagePath)

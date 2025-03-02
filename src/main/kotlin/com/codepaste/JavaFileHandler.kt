@@ -37,7 +37,7 @@ class JavaFileHandler : FileHandlerBase() {
 
         // Write the content to the file
         try {
-            writeFile(targetFile, contentLines.joinToString("\n"))
+            writeFile(targetFile, fileContent)
             return "Saved Java file: ${targetFile.absolutePath}"
         } catch (e: Exception) {
             throw CodePasteException("Error writing Java file: ${e.message}")

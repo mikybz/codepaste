@@ -11,11 +11,15 @@ class ClipboardException(message: String, cause: Throwable? = null) :
 class ConfigurationException(message: String, cause: Throwable? = null) :
     CodePasteException(message, cause)
 
+open class FileException(message: String, cause: Throwable? = null) :
+    CodePasteException(message, cause)
+
+class NetworkException(message: String, cause: Throwable? = null) :
+    CodePasteException(message, cause)
+
+// Additional specialized exceptions
+class FileProcessingException(message: String, cause: Throwable? = null) :
+    FileException(message, cause)
+
 class DatabaseException(message: String, cause: Throwable? = null) :
-    CodePasteException(message, cause)
-
-class FileException(message: String, cause: Throwable? = null) :
-    CodePasteException(message, cause)
-
-class NetworkIssueException(message: String, cause: Throwable? = null) :
     CodePasteException(message, cause)
