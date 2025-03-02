@@ -10,26 +10,6 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-data class AppConfig(
-    val windowWidth: Int = 180,
-    val windowHeight: Int = 300,
-    val buttonWidth: Int = 160,
-    val fieldWidth: Int = 160,
-    val pasteButtonHeight: Int = 80,
-    val javaSourceRoots: List<String> = listOf(
-        "src/main/java",
-        "src/test/java",
-        "src/java",
-        "java"
-    ),
-    val kotlinSourceRoots: List<String> = listOf(
-        "src/main/kotlin",
-        "src/test/kotlin",
-        "src/kotlin",
-        "kotlin"
-    )
-)
-
 class ConfigManager {
     private val logger = LoggerFactory.getLogger(ConfigManager::class.java)
     private val userHome = System.getProperty("user.home")
@@ -102,3 +82,23 @@ class ConfigManager {
         }
     }
 }
+
+data class AppConfig(
+    val windowWidth: Int = 180,
+    val windowHeight: Int = 250,  // Reduced from 300 to 250 (-50px)
+    val buttonWidth: Int = 160,
+    val fieldWidth: Int = 160,
+    val pasteButtonHeight: Int = 80,
+    val javaSourceRoots: List<String> = listOf(
+        "src/main/java",
+        "src/test/java",
+        "src/java",
+        "java"
+    ),
+    val kotlinSourceRoots: List<String> = listOf(
+        "src/main/kotlin",
+        "src/test/kotlin",
+        "src/kotlin",
+        "kotlin"
+    )
+)

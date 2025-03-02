@@ -38,6 +38,11 @@ class CodePasteApp : Application() {
             stage.scene = scene
             stage.show()
 
+            // Ensure paste button has focus
+            Platform.runLater {
+                ui.pasteButton.requestFocus()
+            }
+
             logger.info("CodePaste UI initialized")
         } catch (e: Exception) {
             logger.error("Error initializing application", e)

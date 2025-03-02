@@ -19,8 +19,8 @@ class UIComponents(
     private val logger = LoggerFactory.getLogger(UIComponents::class.java)
 
     val root = VBox().apply {
-        spacing = 10.0
-        padding = Insets(10.0)
+        spacing = 8.0  // Reduced spacing to help with height reduction
+        padding = Insets(8.0)  // Reduced padding to help with height reduction
     }
 
     val projectDirField = TextField(configManager.loadProjectDirectory()).apply {
@@ -32,12 +32,14 @@ class UIComponents(
         prefWidth = config.buttonWidth.toDouble()
         setOnAction {
             selectProjectDirectory()
+            // Set focus back to paste button after directory selection
+            pasteButton.requestFocus()
         }
     }
 
     val pasteButton = Button("Paste").apply {
         prefWidth = config.buttonWidth.toDouble()
-        prefHeight = config.pasteButtonHeight.toDouble()
+        prefHeight = (config.pasteButtonHeight - 10).toDouble() // Reduced height to help with overall height reduction
         setOnAction {
             onPasteAction()
         }
@@ -55,6 +57,9 @@ class UIComponents(
             pasteButton,
             statusLabel
         )
+        
+        // Request focus on the paste button when app starts
+        pasteButton.requestFocus()
     }
 
     fun selectProjectDirectory() {

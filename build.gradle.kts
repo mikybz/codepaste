@@ -52,7 +52,7 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClass.set("com.codepaste.MainKt")
+    mainClass.set("com.codepaste.CodePasteApp")
 }
 
 // Create a fat JAR with all dependencies
@@ -60,7 +60,7 @@ tasks.register<Jar>("uberJar") {
     archiveClassifier.set("uber")
 
     manifest {
-        attributes["Main-Class"] = "com.codepaste.MainKt"
+        attributes["Main-Class"] = "com.codepaste.CodePasteApp"
     }
 
     from(sourceSets.main.get().output)
