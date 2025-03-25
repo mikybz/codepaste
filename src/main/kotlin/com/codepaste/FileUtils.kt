@@ -124,6 +124,10 @@ object FileUtils {
         )
         
         for (line in contentLines) {
+            // If line text is a comment and start with // or * skip it:
+            if (line.trim().startsWith("//") || line.trim().startsWith("*")) {
+                continue
+            }
             val matcher = typeDeclarationPattern.matcher(line)
             if (matcher.find()) {
                 return matcher.group(1)

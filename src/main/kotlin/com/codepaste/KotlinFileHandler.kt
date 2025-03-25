@@ -16,7 +16,14 @@ class KotlinFileHandler : FileHandlerBase() {
         logger.info("Processing Kotlin file. Package: $packageName, Class: $className")
 
         // Find the appropriate root directory
-        val rootDir = findSourceRoot(File(projectDir), config.kotlinSourceRoots)
+        var possibleRoots = config.kotlinSourceRoots
+        if ( className.endsWith("Test") ) {
+            val testRoots = possibleRoots.filter { it.contains("test", ignoreCase = true) }
+            if (testRoots.isNotEmpty()) {
+                possibleRoots = testRoots
+            }
+        }
+        val rootDir = findSourceRoot(File(projectDir), possibleRoots)
             ?: throw CodePasteException("Could not find Kotlin source root in project directory")
 
         // Create package directories if they don't exist
