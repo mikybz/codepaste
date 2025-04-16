@@ -8,10 +8,11 @@ class FileHandler {
     private val javaHandler = JavaFileHandler()
     private val kotlinHandler = KotlinFileHandler()
     private val otherHandler = OtherFileHandler()
+    private val multiFileHandler = MultiFileHandler()
 
     fun processAndSaveFile(fileContent: String, projectDir: String): String {
         val config = configManager.loadConfig()
-        
+
         // Check if it's an empty file
         if (fileContent.isEmpty()) {
             logger.warn("Clipboard content is empty")
@@ -19,7 +20,13 @@ class FileHandler {
         }
 
         try {
-            // Try to determine file type
+            // Check if it's a multi-file input
+            if (MultiFileHandler.isMultiFileInput(fileContent)) {
+                logger.info("Detected multi-file input format")
+                return multiFileHandler.processFile(fileContent, projectDir, config)
+            }
+
+            // Otherwise, proceed with existing file type detection logic
             val fileType = FileUtils.detectFileType(fileContent)
             logger.info("Processing file of type: $fileType")
 
